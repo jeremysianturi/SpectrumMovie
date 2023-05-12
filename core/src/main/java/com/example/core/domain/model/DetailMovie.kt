@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class DetailMovie(
     val adult: Boolean,
     val backdropPath: String,
-    val belongsToCollectionId: Int,
+    val belongsToCollectionId: Int?,
     val belongsToCollectionName: String,
     val belongsToCollectionPosterPath: String,
     val belongsToCollectionBackdropPath: String,
@@ -29,7 +29,7 @@ data class DetailMovie(
     val productionCountriesIso_3166_1: String,
     val productionCountriesName: String,
     val releaseDate: String,
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int,
     val spokenLanguagesEnglishName: String,
     val spokenLanguagesIso_639_1: String,

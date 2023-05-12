@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class BelongsToCollectionResponse (
 
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @field:SerializedName("name")
     val name: String,

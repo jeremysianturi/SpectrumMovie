@@ -1,10 +1,7 @@
 package com.example.core.helper.helpermapper
 
-import com.example.core.data.source.local.entity.BannerEntity
 import com.example.core.data.source.local.entity.PopularMoviesEntity
-import com.example.core.data.source.remote.response.banner.BannerResponse
 import com.example.core.data.source.remote.response.popularmovies.PopularMovieResponse
-import com.example.core.domain.model.Banner
 import com.example.core.domain.model.PopularMovies
 
 object DataMapperPopularMovies {

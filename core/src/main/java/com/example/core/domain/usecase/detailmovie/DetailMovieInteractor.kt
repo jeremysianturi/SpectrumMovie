@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DetailMovieInteractor @Inject constructor(private val detailMovieRepository: DetailMovieRepository) :
     DetailMovieUsecase {
 
-    override fun getDetailMovie(movieId: String, apiKey: String, language: String): Flow<Resource<List<DetailMovie>>> =
-        detailMovieRepository.getDetailMovie(movieId, apiKey, language)
+    override fun getDetailMovie(movieId: String, apiKey: String): Flow<Resource<List<DetailMovie>>> =
+        detailMovieRepository.getDetailMovie(movieId, apiKey)
 
 }

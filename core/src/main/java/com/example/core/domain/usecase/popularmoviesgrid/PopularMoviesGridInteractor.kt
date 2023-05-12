@@ -9,8 +9,8 @@ import javax.inject.Inject
 class PopularMoviesGridInteractor @Inject constructor(private val popularMoviesGridRepository: PopularMoviesGridRepository) :
     PopularMoviesGridUsecase {
 
-    override fun getPopularMoviesGrid(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String, year: String): Flow<Resource<List<PopularMoviesGrid>>> =
-        popularMoviesGridRepository.getPopularMoviesGrid(apiKey, language, sortBy, includeAdult, includeVideo, page,year)
+    override fun getPopularMoviesGrid(apiKey: String,page: String): Flow<Resource<List<PopularMoviesGrid>>> =
+        popularMoviesGridRepository.getPopularMoviesGrid(apiKey,page)
 
 
     override fun getSearchPopularMoviesGrid(search: String): Flow<List<PopularMoviesGrid>> =

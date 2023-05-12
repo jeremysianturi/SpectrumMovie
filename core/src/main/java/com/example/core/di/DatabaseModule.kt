@@ -24,13 +24,19 @@ class DatabaseModule {
     ).fallbackToDestructiveMigration().build()
 
     @Provides
-    fun provideBannerDao(database: MovieDatabase): BannerDao = database.bannerDao()
+    fun provideNowPlayingDao(database: MovieDatabase): NowPlayingDao = database.nowPlayingDao()
 
     @Provides
     fun providePopularMoviesDao(database: MovieDatabase): PopularMoviesDao = database.popularMoviesDao()
 
     @Provides
-    fun provideComingSoonDao(database: MovieDatabase): ComingSoonDao = database.comingSoonDao()
+    fun provideTopRatedDao(database: MovieDatabase): TopRatedDao = database.topRatedDao()
+
+    @Provides
+    fun provideUpcomingDao(database: MovieDatabase): UpcomingDao = database.upcomingDao()
+
+    @Provides
+    fun provideGenreDao(database: MovieDatabase): GenreDao = database.genreDao()
 
     @Provides
     fun provideDetailMovieDao(database: MovieDatabase): DetailMovieDao = database.detailMovieDao()

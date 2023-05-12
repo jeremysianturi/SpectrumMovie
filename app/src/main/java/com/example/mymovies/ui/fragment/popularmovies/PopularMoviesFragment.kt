@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.data.Resource
 import com.example.mymovies.databinding.FragmentAwardBinding
+import com.example.mymovies.helper.Constant
 import com.example.mymovies.ui.fragment.moviedetail.DetailMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +28,7 @@ class PopularMoviesFragment : Fragment() {
     private lateinit var adapterPopularMoviesGrid : PopularMoviesAdapterGrid
     private val popularMovieGridViewModel : PopularMoviesGridViewModel by viewModels()
 
-    private var apiKey = "4e017aafa0c4da4d663bc40fa6d6afe0"
-    private var language = "en-US"
-    private var sortBy = "popularity.desc"
+    private var apiKey = Constant.API_KEY
     private var includeAdult = false
     private var includeVideo = false
     private var page = "1"
@@ -47,7 +46,7 @@ class PopularMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObserverPopularMoviesGrid(apiKey, language, sortBy, includeAdult, includeVideo, page,year)
+        setupObserverPopularMoviesGrid(apiKey,page)
         buildListPopularMoviesGrid()
 
         // search
@@ -56,9 +55,9 @@ class PopularMoviesFragment : Fragment() {
         }
     }
 
-    private fun setupObserverPopularMoviesGrid(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String, year: String) {
+    private fun setupObserverPopularMoviesGrid(apiKey: String,page: String) {
 
-        popularMovieGridViewModel.getPopularMoviesGrid(apiKey, language, sortBy, includeAdult, includeVideo, page, year).observe(viewLifecycleOwner) { data ->
+        popularMovieGridViewModel.getPopularMoviesGrid(apiKey,page).observe(viewLifecycleOwner) { data ->
 
             if (data != null) {
                 when (data) {
@@ -109,10 +108,6 @@ class PopularMoviesFragment : Fragment() {
         adapterPopularMoviesGrid.onItemClick = { selectData ->
             val mIntent = Intent(activity, DetailMovieActivity::class.java)
             mIntent.putExtra("id_choosen", selectData.id)
-            mIntent.putExtra("overview", selectData.overview)
-            mIntent.putExtra("posterPath", selectData.posterPath)
-            mIntent.putExtra("title", selectData.title)
-            mIntent.putExtra("release_date", selectData.releaseDate)
             startActivity(mIntent)
         }
     }

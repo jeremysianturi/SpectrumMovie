@@ -53,7 +53,7 @@ data class DetailMovieResponse (
     val releaseDate: String,
 
     @field:SerializedName("revenue")
-    val revenue: Int,
+    val revenue: Long,
 
     @field:SerializedName("runtime")
     val runtime: Int,

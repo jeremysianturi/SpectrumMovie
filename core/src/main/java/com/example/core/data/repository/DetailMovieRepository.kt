@@ -5,7 +5,6 @@ import com.example.core.data.Resource
 import com.example.core.data.source.local.room.LocalDataSource
 import com.example.core.data.source.remote.RemoteDataSource
 import com.example.core.data.source.remote.network.ApiResponse
-import com.example.core.data.source.remote.response.banner.BannerResponse
 import com.example.core.data.source.remote.response.detailmovie.DetailMovieResponse
 import com.example.core.domain.model.DetailMovie
 import com.example.core.domain.repository.IDetailMovieRepository
@@ -23,7 +22,7 @@ class DetailMovieRepository @Inject constructor(
     private val appExecutors: AppExecutors
 ) : IDetailMovieRepository {
 
-    override fun getDetailMovie(movieId: String,apiKey: String, language: String): Flow<Resource<List<DetailMovie>>> =
+    override fun getDetailMovie(movieId: String,apiKey: String): Flow<Resource<List<DetailMovie>>> =
         object :
             NetworkBoundResourceWithDeleteLocalData<List<DetailMovie>, DetailMovieResponse>() {
 
@@ -37,7 +36,7 @@ class DetailMovieRepository @Inject constructor(
                 true
 
             override suspend fun createCall(): Flow<ApiResponse<DetailMovieResponse>> =
-                remoteDataSource.getDetailMovie(movieId, apiKey, language)
+                remoteDataSource.getDetailMovie(movieId, apiKey)
 
             override suspend fun saveCallResult(data: DetailMovieResponse) {
                 val list = DataMapperDetailMovie.mapResponsetoEntities(listOf(data))

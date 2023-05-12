@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IPopularMoviesRepository {
 
-    fun getPopularMovies(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String) : Flow<Resource<List<PopularMovies>>>
+    fun getPopularMovies(apiKey: String,page: String) : Flow<Resource<List<PopularMovies>>>
 
 //    fun updateBusiness(businessUpdate: BusinessUpdate) : Flow<Resource<Submit>>
 //

@@ -1,5 +1,6 @@
 package com.example.mymovies.ui.fragment.home
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,52 +8,53 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.example.core.data.Resource
-import com.example.core.domain.model.Banner
+import com.example.core.domain.model.Genre
+import com.example.core.domain.model.NowPlaying
 import com.example.mymovies.databinding.FragmentHomeBinding
-import com.example.mymovies.ui.fragment.home.banner.SliderAdapter
-import com.example.mymovies.ui.fragment.home.comingsoon.ComingSoonAdapter
+import com.example.mymovies.helper.Constant
+import com.example.mymovies.ui.fragment.home.genre.GenreAdapter
+import com.example.mymovies.ui.fragment.home.nowplaying.SliderAdapter
 import com.example.mymovies.ui.fragment.home.popularmovies.PopularMoviesAdapter
+import com.example.mymovies.ui.fragment.home.toprated.TopRatedAdapter
+import com.example.mymovies.ui.fragment.home.upcoming.UpcomingAdapter
 import com.example.mymovies.ui.fragment.moviedetail.DetailMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapterBanner : SliderAdapter
     private lateinit var adapterPopularMovies : PopularMoviesAdapter
-    private lateinit var adapterComingSoon : ComingSoonAdapter
+    private lateinit var adapterTopRated : TopRatedAdapter
+    private lateinit var adapterUpcoming : UpcomingAdapter
+    private lateinit var adapterGenre : GenreAdapter
     private val homeFragmentViewModel : HomeFragmentViewModel by viewModels()
 
     private var currentPage = 0
     private var numPages = 0
 
-
-    // list of banner
-    private lateinit var images : ArrayList<String>
-
     // param
-    private var apiKey = "4e017aafa0c4da4d663bc40fa6d6afe0"
-    private var language = "en-US"
-    private var sortBy = "popularity.desc"
-    private var includeAdult = false
-    private var includeVideo = false
+    private var apiKey = Constant.API_KEY
     private var page = "1"
-    private var year = Calendar.getInstance().get(Calendar.YEAR).toString()
+//    private var year = Calendar.getInstance().get(Calendar.YEAR).toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -62,32 +64,28 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupObserverBanner(apiKey,language,sortBy,includeAdult,includeVideo,page)
-        setupObserverPopularMovies(apiKey,language,sortBy,includeAdult,includeVideo,page)
+        setupObserverNowPlaying(apiKey,page)
+        setupObserverPopularMovies(apiKey,page)
         buildListPopularMovies()
-        setupObserverComingSoon(apiKey,language,sortBy,includeAdult,includeVideo,page,year)
-        buildListComingSoon()
-
-        images = ArrayList()
-
-        // onclick
+        setupObserverTopRated(apiKey,page)
+        buildListTopRated()
+        setupObserverUpcoming(apiKey,page)
+        buildListUpcoming()
+        setupObserverGenre(apiKey)
         onclick()
-
     }
 
-    // BANNER
-    private fun setupObserverBanner(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String) {
+    // NowPlaying
+    private fun setupObserverNowPlaying(apiKey: String, page: String) {
 
-        homeFragmentViewModel.getBanner(apiKey, language, sortBy, includeAdult, includeVideo, page).observe(viewLifecycleOwner) { data ->
+        homeFragmentViewModel.getNowPlaying(apiKey,page).observe(viewLifecycleOwner) { data ->
 
             if (data != null) {
                 when (data) {
                     is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBarHome.visibility = View.GONE
-//                        adapterBanner.setData(data.data)
-                        getPosterUrl(data.data)
+                        createSlider2(data.data!!)
                         Timber.tag(tag).d("observer_business_adapter ${data.data}")
                     }
                     is Resource.Error -> {
@@ -102,28 +100,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getPosterUrl(data : List<Banner>?){
-
-        if (data != null) {
-
-            for (i in 0 until data.size){
-                images.add("https://image.tmdb.org/t/p/original${data[i].posterPath}")
-            }
-        }
-        Timber.d("check isi images : $images")
-        createSlider(images)
-    }
-
-    private fun createSlider(string: List<String>) {
-//    private fun createSlider(string: List<Int>) {
-
-        binding.vpSlider.adapter = SliderAdapter(this.requireContext(), string)
-        binding.indicator.setViewPager(binding.vpSlider)
+    private fun createSlider2(string: List<NowPlaying>) {
+        val adapterNowPlaying = SliderAdapter(this.requireContext(), string)
+        binding.vpSlider.adapter = adapterNowPlaying
         val density = resources.displayMetrics.density
-        //Set circle indicator radius
-        binding.indicator.radius = 5 * density
         numPages = string.size
-        // Auto getData of viewpager
+
         val update = Runnable {
             if (currentPage === numPages) {
                 currentPage = 0
@@ -136,23 +118,13 @@ class HomeFragment : Fragment() {
                 Handler(Looper.getMainLooper()).post(update)
             }
         }, 5000, 5000)
-
-        // Pager listener over indicator
-        binding.indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(position: Int) {
-                currentPage = position
-            }
-
-            override fun onPageScrolled(pos: Int, arg1: Float, arg2: Int) {}
-            override fun onPageScrollStateChanged(pos: Int) {}
-        })
     }
-    // BANNER
+    // NowPlaying
 
     // POPULAR MOVIES
-    private fun setupObserverPopularMovies(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String) {
+    private fun setupObserverPopularMovies(apiKey: String,page: String) {
 
-        homeFragmentViewModel.getPopularMovies(apiKey, language, sortBy, includeAdult, includeVideo, page).observe(viewLifecycleOwner) { data ->
+        homeFragmentViewModel.getPopularMovies(apiKey,page).observe(viewLifecycleOwner) { data ->
 
             if (data != null) {
                 when (data) {
@@ -192,27 +164,23 @@ class HomeFragment : Fragment() {
         adapterPopularMovies.onItemClick = { selectData ->
             val mIntent = Intent(activity, DetailMovieActivity::class.java)
             mIntent.putExtra("id_choosen", selectData.id)
-            mIntent.putExtra("overview", selectData.overview)
-            mIntent.putExtra("posterPath", selectData.posterPath)
-            mIntent.putExtra("title", selectData.title)
-            mIntent.putExtra("release_date", selectData.releaseDate)
             startActivity(mIntent)
         }
     }
     // POPULAR MOVIES
 
-    // COMING SOON
-    private fun setupObserverComingSoon(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String, year: String) {
+    // TopRated
+    private fun setupObserverTopRated(apiKey: String,page: String) {
 
-        homeFragmentViewModel.getComingSoon(apiKey, language, sortBy, includeAdult, includeVideo, page,year).observe(viewLifecycleOwner) { data ->
+        homeFragmentViewModel.getTopRated(apiKey,page).observe(viewLifecycleOwner) { data ->
 
             if (data != null) {
                 when (data) {
                     is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBarHome.visibility = View.GONE
-                        adapterComingSoon.setData(data.data)
-                        Timber.tag(tag).d("observer_coming_soon_adapter ${data.data}")
+                        adapterTopRated.setData(data.data)
+                        Timber.tag(tag).d("observer_top_rated_adapter ${data.data}")
                     }
                     is Resource.Error -> {
                         binding.progressBarHome.visibility = View.GONE
@@ -221,37 +189,136 @@ class HomeFragment : Fragment() {
 //                            .show(parentFragmentManager, ErrorBottomSheet.TAG)
                     }
                 }
-
             }
         }
     }
 
-    private fun buildListComingSoon() {
-
-        adapterComingSoon = ComingSoonAdapter()
-        binding.rvComingSoon.setHasFixedSize(true)
-        binding.rvComingSoon.layoutManager =
+    private fun buildListTopRated() {
+        adapterTopRated = TopRatedAdapter()
+        binding.rvTopRated.setHasFixedSize(true)
+        binding.rvTopRated.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvComingSoon.adapter = adapterComingSoon
+        binding.rvTopRated.adapter = adapterTopRated
 
-        binding.rvComingSoon.addItemDecoration(
+        binding.rvTopRated.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 LinearLayoutManager.HORIZONTAL
             )
         )
 
-        adapterComingSoon.onItemClick = { selectData ->
+        adapterTopRated.onItemClick = { selectData ->
             val mIntent = Intent(activity, DetailMovieActivity::class.java)
             mIntent.putExtra("id_choosen", selectData.id)
-            mIntent.putExtra("overview", selectData.overview)
-            mIntent.putExtra("posterPath", selectData.posterPath)
-            mIntent.putExtra("title", selectData.title)
-            mIntent.putExtra("release_date", selectData.releaseDate)
             startActivity(mIntent)
         }
     }
-    // COMING SOON
+    // TopRated
+
+    // Upcoming
+    private fun setupObserverUpcoming(apiKey: String,page: String) {
+
+        homeFragmentViewModel.getUpcoming(apiKey,page).observe(viewLifecycleOwner) { data ->
+
+            if (data != null) {
+                when (data) {
+                    is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
+                    is Resource.Success -> {
+                        binding.progressBarHome.visibility = View.GONE
+                        adapterUpcoming.setData(data.data)
+                        Timber.tag(tag).d("observer_upcoming_adapter ${data.data}")
+                    }
+                    is Resource.Error -> {
+                        binding.progressBarHome.visibility = View.GONE
+                        Timber.tag(tag).d("error_message ${data.message}")
+//                        ErrorBottomSheet.instance(data.message.toString(), data.message.toString())
+//                            .show(parentFragmentManager, ErrorBottomSheet.TAG)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun buildListUpcoming() {
+        adapterUpcoming = UpcomingAdapter()
+        binding.rvUpcoming.setHasFixedSize(true)
+        binding.rvUpcoming.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvUpcoming.adapter = adapterUpcoming
+
+        binding.rvUpcoming.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
+
+        adapterUpcoming.onItemClick = { selectData ->
+            val mIntent = Intent(activity, DetailMovieActivity::class.java)
+            mIntent.putExtra("id_choosen", selectData.id)
+            startActivity(mIntent)
+        }
+    }
+    // Upcoming
+
+    // Genre
+    private fun setupObserverGenre(apiKey: String) {
+
+        homeFragmentViewModel.getGenre(apiKey).observe(viewLifecycleOwner) { data ->
+
+            if (data != null) {
+                when (data) {
+                    is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
+                    is Resource.Success -> {
+                        binding.progressBarHome.visibility = View.GONE
+//                        adapterGenre.setData(data.data)
+                        buildListGenre(data.data!!)
+                        Timber.tag(tag).d("observer_genre_adapter ${data.data}")
+                    }
+                    is Resource.Error -> {
+                        binding.progressBarHome.visibility = View.GONE
+                        Timber.tag(tag).d("error_message ${data.message}")
+//                        ErrorBottomSheet.instance(data.message.toString(), data.message.toString())
+//                            .show(parentFragmentManager, ErrorBottomSheet.TAG)
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun buildListGenre(genres: List<Genre>) {
+
+        val genreName = ArrayList<String>()
+        for (i in 0 until genres.size){
+            genreName.add(genres[i].name)
+        }
+
+
+        val adapter = activity?.let {
+            ArrayAdapter<String>(
+                it,
+                R.layout.simple_spinner_item, genreName
+            )
+        }
+        adapter?.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinner.setAdapter(adapter)
+
+         binding.spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val selectedGenre = parent.getItemAtPosition(position).toString()
+                Toast.makeText(activity, "Genre:  $selectedGenre", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+    }
+    // Genre
 
 
     private fun onclick() {

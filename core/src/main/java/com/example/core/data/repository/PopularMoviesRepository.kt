@@ -22,7 +22,7 @@ class PopularMoviesRepository @Inject constructor(
     private val appExecutors: AppExecutors
 ) : IPopularMoviesRepository {
 
-    override fun getPopularMovies(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String): Flow<Resource<List<PopularMovies>>> =
+    override fun getPopularMovies(apiKey: String,page: String): Flow<Resource<List<PopularMovies>>> =
         object :
             NetworkBoundResourceWithDeleteLocalData<List<PopularMovies>, List<PopularMovieResponse>>() {
 
@@ -36,7 +36,7 @@ class PopularMoviesRepository @Inject constructor(
                 true
 
             override suspend fun createCall(): Flow<ApiResponse<List<PopularMovieResponse>>> =
-                remoteDataSource.getPopularMovies(apiKey, language, sortBy, includeAdult, includeVideo, page)
+                remoteDataSource.getPopularMovies(apiKey,page)
 
             override suspend fun saveCallResult(data: List<PopularMovieResponse>) {
                 val list = DataMapperPopularMovies.mapResponsetoEntities(data)

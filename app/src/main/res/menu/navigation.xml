@@ -16,9 +16,4 @@
         android:icon="@drawable/ic_favorite_white"
         android:title="Favorite" />
 
-    <item
-        android:id="@+id/navigation_location"
-        android:icon="@drawable/ic_location_white"
-        android:title="Location" />
-
 </menu>

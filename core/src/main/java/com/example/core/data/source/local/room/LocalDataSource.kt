@@ -8,52 +8,52 @@ import javax.inject.Singleton
 
 @Singleton
 class LocalDataSource @Inject constructor(
-    private val mBannerDao: BannerDao,
+    private val mNowPlayingDao: NowPlayingDao,
     private val mPopularMoviesDao: PopularMoviesDao,
-    private val mComingSoonDao: ComingSoonDao,
+    private val mTopRatedDao: TopRatedDao,
+    private val mUpcomingDao: UpcomingDao,
+    private val mGenreDao: GenreDao,
     private val mDetailMovieDao: DetailMovieDao,
     private val mPopularMoviesGridDao: PopularMoviesGridDao,
 ) {
 
-    // Banner
-    fun getBanner(): Flow<List<BannerEntity>> = mBannerDao.getBanner()
-
-    suspend fun insertBanner(banner: List<BannerEntity>) = mBannerDao.insertAndDeleteBanner(banner)
-
-    suspend fun deleteBanner() = mBannerDao.deleteBanner()
+    // NowPlaying
+    fun getNowPlaying(): Flow<List<NowPlayingEntity>> = mNowPlayingDao.getNowPlaying()
+    suspend fun insertNowPlaying(nowPlaying: List<NowPlayingEntity>) = mNowPlayingDao.insertAndDeleteNowPlaying(nowPlaying)
+    suspend fun deleteNowPlaying() = mNowPlayingDao.deleteNowPlaying()
 
 
     // Popular Movies
     fun getPopularMovies(): Flow<List<PopularMoviesEntity>> = mPopularMoviesDao.getPopularMovies()
-
     suspend fun insertPopularMovies(popularMovies: List<PopularMoviesEntity>) = mPopularMoviesDao.insertAndDeletePopularMovies(popularMovies)
-
     suspend fun deletePopularMovies() = mPopularMoviesDao.deletePopularMovies()
 
 
-    // Coming Soon
-    fun getComingSoon(): Flow<List<ComingSoonEntity>> = mComingSoonDao.getComingSoon()
+    // TopRated
+    fun getTopRated(): Flow<List<TopRatedEntity>> = mTopRatedDao.getTopRated()
+    suspend fun insertTopRated(topRated: List<TopRatedEntity>) = mTopRatedDao.insertAndDeleteTopRated(topRated)
+    suspend fun deleteTopRated() = mTopRatedDao.deleteTopRated()
 
-    suspend fun insertComingSoon(comingSoon: List<ComingSoonEntity>) = mComingSoonDao.insertAndDeleteComingSoon(comingSoon)
+    // Upcoming
+    fun getUpcoming(): Flow<List<UpcomingEntity>> = mUpcomingDao.getUpcoming()
+    suspend fun insertUpcoming(upcoming: List<UpcomingEntity>) = mUpcomingDao.insertAndDeleteUpcoming(upcoming)
+    suspend fun deleteUpcoming() = mUpcomingDao.deleteUpcoming()
 
-    suspend fun deleteComingSoon() = mComingSoonDao.deleteComingSoon()
-
+    // Genre
+    fun getGenre(): Flow<List<GenreEntity>> = mGenreDao.getGenre()
+    suspend fun insertGenre(genre: List<GenreEntity>) = mGenreDao.insertAndDeleteGenre(genre)
+    suspend fun deleteGenre() = mGenreDao.deleteGenre()
 
     // Detail Movie
     fun getDetailMovie(): Flow<List<DetailMovieEntity>> = mDetailMovieDao.getDetailMovie()
-
     suspend fun insertDetailMovie(detailMovie: List<DetailMovieEntity>) = mDetailMovieDao.insertAndDeleteDetailMovie(detailMovie)
-
     suspend fun deleteDetailMovie() = mDetailMovieDao.deleteDetailMovie()
 
 
     // Popular Movies Grid
     fun getPopularMoviesGrid(): Flow<List<PopularMoviesGridEntity>> = mPopularMoviesGridDao.getPopularMoviesGrid()
-
     suspend fun insertPopularMoviesGrid(popularMoviesGrid: List<PopularMoviesGridEntity>) = mPopularMoviesGridDao.insertAndDeletePopularMoviesGrid(popularMoviesGrid)
-
     suspend fun deletePopularMoviesGrid() = mPopularMoviesGridDao.deletePopularMoviesGrid()
-
     fun getSearchPopularMoviesGrid(search: String): Flow<List<PopularMoviesGridEntity>> =
         mPopularMoviesGridDao.getSearchPopularMoviesGrid(search)
 

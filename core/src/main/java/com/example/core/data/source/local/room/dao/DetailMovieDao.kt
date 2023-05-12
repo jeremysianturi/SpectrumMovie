@@ -1,7 +1,6 @@
 package com.example.core.data.source.local.room.dao
 
 import androidx.room.*
-import com.example.core.data.source.local.entity.BannerEntity
 import com.example.core.data.source.local.entity.DetailMovieEntity
 import kotlinx.coroutines.flow.Flow
 

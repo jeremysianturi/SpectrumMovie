@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,100 +7,246 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.moviedetail.DetailMovieActivity">
 
-    <ImageView
-        android:id="@+id/iv_poster_detail"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content">
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ll_button">
-    </ImageView>
+        <ImageView
+            android:id="@+id/iv_poster_detail"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
 
-    <LinearLayout
-        android:id="@+id/ll_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_button">
+        </ImageView>
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_poster_detail"
-        app:layout_constraintBottom_toTopOf="@id/tv_cast_title">
-
-        <Button
-            android:id="@+id/btn_watch_trailer"
+        <LinearLayout
+            android:id="@+id/ll_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_16"
-            android:background="@color/teal_700"
-            android:textColor="@color/white"
-            android:text="Watch Trailer"
-            android:layout_weight="1">
-        </Button>
+            android:orientation="horizontal"
+            android:weightSum="2"
 
-        <Button
-            android:id="@+id/btn_add_to_favorite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_poster_detail"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_overview">
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_16"
+                android:background="@color/teal_700"
+                android:textColor="@color/white"
+                android:layout_weight="1">
+            </TextView>
+
+            <Button
+                android:id="@+id/btn_add_to_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_16"
+                android:background="@color/teal_700"
+                android:textColor="@color/white"
+                android:text="Add to Favorite"
+                android:layout_weight="1">
+            </Button>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_16"
-            android:background="@color/teal_700"
-            android:textColor="@color/white"
-            android:text="Add to Favorite"
-            android:layout_weight="1">
-        </Button>
-    </LinearLayout>
+            android:text="@string/title"
 
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_button"
+            app:layout_constraintBottom_toTopOf="@id/tv_title">
+        </TextView>
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_button"
-        app:layout_constraintBottom_toTopOf="@id/tv_cast_title">
-    </TextView>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <TextView
-        android:id="@+id/tv_cast_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_cast"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_title"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_overview">
+        </TextView>
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_description"
-        app:layout_constraintBottom_toTopOf="@id/rv_cast">
-    </TextView>
+        <TextView
+            android:id="@+id/tv_title_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_overview"
+            android:textSize="16sp"
+            android:textStyle="bold"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toTopOf="@id/tv_overview">
+        </TextView>
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_cast_title"
-        app:layout_constraintBottom_toBottomOf="parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <ProgressBar
-        android:id="@+id/progress_bar_detail_movie"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:indeterminateDrawable="@drawable/progress_bar"
-        android:layout_gravity="center"
-        android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_overview"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_backdrop">
+        </TextView>
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <TextView
+            android:id="@+id/tv_title_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_backdrop"
+            android:textSize="16sp"
+            android:textStyle="bold"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_overview"
+            app:layout_constraintBottom_toTopOf="@id/iv_backdrop">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/iv_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_backdrop"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_releasedate">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tv_title_releasedate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toTopOf="@id/tv_releasedate">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_releasedate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_releasedate"
+            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_title_voteaverage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vote_average"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_releasedate"
+            app:layout_constraintBottom_toTopOf="@id/tv_voteaverage">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_voteaverage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_voteaverage"
+            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_title_votecount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vote_count"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_voteaverage"
+            app:layout_constraintBottom_toTopOf="@id/tv_votecount">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_votecount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_votecount"
+            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_title_languages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/spoken_languages"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_votecount"
+            app:layout_constraintBottom_toTopOf="@id/tv_languages">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_languages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_languages"
+            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_detail_movie"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:indeterminateDrawable="@drawable/progress_bar"
+            android:layout_gravity="center"
+            android:visibility="gone"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

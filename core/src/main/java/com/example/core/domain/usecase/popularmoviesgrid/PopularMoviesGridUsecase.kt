@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PopularMoviesGridUsecase {
 
-    fun getPopularMoviesGrid(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String, year: String): Flow<Resource<List<PopularMoviesGrid>>>
+    fun getPopularMoviesGrid(apiKey: String,page: String): Flow<Resource<List<PopularMoviesGrid>>>
 
     fun getSearchPopularMoviesGrid(search: String): Flow<List<PopularMoviesGrid>>
 

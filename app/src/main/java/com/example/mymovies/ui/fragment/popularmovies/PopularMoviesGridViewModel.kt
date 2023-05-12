@@ -21,7 +21,7 @@ class PopularMoviesGridViewModel @ViewModelInject constructor(
 
     val search = popularMoviesGridFlow.asLiveData()
 
-    fun getPopularMoviesGrid(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String, year: String) =
-        popularMoviesGridUsecase.getPopularMoviesGrid(apiKey, language, sortBy, includeAdult, includeVideo, page,year).asLiveData()
+    fun getPopularMoviesGrid(apiKey: String,page: String) =
+        popularMoviesGridUsecase.getPopularMoviesGrid(apiKey,page).asLiveData()
 
 }

@@ -1,70 +1,66 @@
 package com.example.core.data.source.remote.network
 
-import com.example.core.data.source.remote.response.banner.ListBannerResponse
-import com.example.core.data.source.remote.response.comingsoon.ListComingSoonResponse
 import com.example.core.data.source.remote.response.detailmovie.DetailMovieResponse
+import com.example.core.data.source.remote.response.nowplaying.ListNowPlayingResponse
+import com.example.core.data.source.remote.response.toprated.ListTopRatedResponse
 import com.example.core.data.source.remote.response.detailmovie.ListDetailMovieResponse
+import com.example.core.data.source.remote.response.genre.ListGenreResponse
 import com.example.core.data.source.remote.response.popularmovies.ListPopularMoviesResponse
 import com.example.core.data.source.remote.response.popularmoviesgrid.ListPopularMovieGridResponse
+import com.example.core.data.source.remote.response.upcoming.ListUpcomingResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
 
-    // banner
-    @GET("discover/movie")
-    suspend fun getBanner(
+    // now playing
+    @GET("movie/now_playing")
+    suspend fun getNowPlaying(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("sort_by") sortBy: String,
-        @Query("include_adult") includeAdult: Boolean,
-        @Query("include_video") includeVideo: Boolean,
         @Query("page") page: String
-    ): ListBannerResponse
+    ): ListNowPlayingResponse
 
-    // popular movies
-    @GET("discover/movie")
+    // popular
+    @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("sort_by") sortBy: String,
-        @Query("include_adult") includeAdult: Boolean,
-        @Query("include_video") includeVideo: Boolean,
         @Query("page") page: String
     ): ListPopularMoviesResponse
 
-
-    // coming soon
-    @GET("discover/movie")
-    suspend fun getComingSoon(
+    // top rated
+    @GET("movie/top_rated")
+    suspend fun getTopRated(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("sort_by") sortBy: String,
-        @Query("include_adult") includeAdult: Boolean,
-        @Query("include_video") includeVideo: Boolean,
-        @Query("page") page: String,
-        @Query("year") year: String
-    ): ListComingSoonResponse
+        @Query("page") page: String
+    ): ListTopRatedResponse
+
+    // upcoming
+    @GET("movie/upcoming")
+    suspend fun getUpcoming(
+        @Query("api_key") apiKey: String,
+        @Query("page") page: String
+    ): ListUpcomingResponse
+
+    // genre
+    @GET("genre/movie/list")
+    suspend fun getGenre(
+        @Query("api_key") apiKey: String
+    ): ListGenreResponse
+
 
     // detail movie
     @GET("movie/{movieId}")
     suspend fun getDetailMovie (
         @Path(value = "movieId",encoded = true) movieId : String,
         @Query("api_key") apiKey: String,
-        @Query("language") language: String
-    ): ListDetailMovieResponse
+    ): DetailMovieResponse
 
 
     // popular movies grid
     @GET("discover/movie")
     suspend fun getPopularMoviesGrid(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("sort_by") sortBy: String,
-        @Query("include_adult") includeAdult: Boolean,
-        @Query("include_video") includeVideo: Boolean,
         @Query("page") page: String,
-        @Query("year") year: String
     ): ListPopularMovieGridResponse
 }

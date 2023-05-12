@@ -16,9 +16,12 @@ import com.example.core.domain.model.DetailMovie
 import com.example.core.domain.model.PopularMovies
 import com.example.core.utils.LovedEntity
 import com.example.mymovies.databinding.ActivityDetailMovieBinding
+import com.example.mymovies.helper.Constant
 import com.example.mymovies.helper.loadImage
 import com.example.mymovies.ui.fragment.LovedViewModel
 import com.example.mymovies.ui.fragment.home.HomeFragmentViewModel
+import com.example.mymovies.ui.fragment.home.genre.GenreAdapter
+import com.example.mymovies.ui.fragment.home.popularmovies.PopularMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -31,19 +34,14 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailMovieBinding
     private val detailMovieViewModel : DetailMovieViewModel by viewModels()
+    private lateinit var adapterGenre : GenreAdapter
 
     private var dataDetailMovie : List<DetailMovie>? = null
-    private var apiKey = "4e017aafa0c4da4d663bc40fa6d6afe0"
-    private var language = "en-US"
+    private var apiKey = Constant.API_KEY
     private lateinit var idChoosen: String
-    private lateinit var overview: String
-    private lateinit var posterPath: String
-    private lateinit var title: String
-    private lateinit var releaseDate1: String
 
     // loved
     lateinit var db: MovieDatabase
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,39 +56,30 @@ class DetailMovieActivity : AppCompatActivity() {
         db = Room.databaseBuilder(applicationContext, MovieDatabase::class.java, "loved-db").build()
 
         idChoosen = intent.getIntExtra("id_choosen",520763).toString()
-        overview = intent.getStringExtra("overview").toString()
-        posterPath = intent.getStringExtra("posterPath").toString()
-        title = intent.getStringExtra("title").toString()
-        releaseDate1 = intent.getStringExtra("release_date").toString()
+        Timber.d("check value extra data : \n idChoosen: $idChoosen ")
 
-        Timber.d("check value extra data : \n idChoosen: $idChoosen \n overview: $overview \n posterPath: $posterPath \n title: $title \n releaseDate: $releaseDate1")
-
-        setupObserver(idChoosen, apiKey, language)
-        setView()
-
-        // onclick
+        setupObserver(idChoosen,apiKey)
         onclick()
 
     }
 
+    private fun setupObserver(movieId: String, apiKey: String) {
 
-    private fun setupObserver(movieId: String, apiKey: String, language: String) {
-
-        detailMovieViewModel.getDetailMovie(movieId, apiKey, language).observe(this) { data ->
+        detailMovieViewModel.getDetailMovie(movieId, apiKey).observe(this) { data ->
 
             if (data != null) {
                 when (data) {
                     is Resource.Loading -> binding.progressBarDetailMovie.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBarDetailMovie.visibility = View.GONE
-//                        adapter.setData(data.data)
                         dataDetailMovie = data.data
-//                        setView()
+//                        adapterGenre.setData(data.data.get(0).genresName)
+                        setView()
                         Timber.d("observer_detail_movie_adapter ${data.data}")
                     }
                     is Resource.Error -> {
                         binding.progressBarDetailMovie.visibility = View.GONE
-                        Timber.d("error_message ${data.message}")
+                        Timber.d("error_message detail ${data.message}")
 //                        ErrorBottomSheet.instance(data.message.toString(), data.message.toString())
 //                            .show(supportFragmentManager, ErrorBottomSheet.TAG)
                     }
@@ -101,44 +90,67 @@ class DetailMovieActivity : AppCompatActivity() {
 
     }
 
+    private fun buildListGenre() {
+
+        adapterGenre = GenreAdapter()
+        binding.rvGenre.setHasFixedSize(true)
+        binding.rvGenre.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvGenre.adapter = adapterGenre
+
+        binding.rvGenre.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
+    }
+
     private fun setView(){
         binding.apply {
-//            ivPosterDetail.loadImage(this@DetailMovieActivity,"https://image.tmdb.org/t/p/original${dataDetailMovie?.get(0)?.posterPath}")
-//           tvDescription.text = dataDetailMovie?.get(0)?.overview
-            ivPosterDetail.loadImage(this@DetailMovieActivity,"https://image.tmdb.org/t/p/original$posterPath")
-            tvDescription.text = overview
+            Log.d("checki","check check check : $dataDetailMovie")
+            tvStatus.text = dataDetailMovie?.get(0)?.status
+            ivPosterDetail.loadImage(this@DetailMovieActivity,"https://image.tmdb.org/t/p/original${dataDetailMovie?.get(0)?.posterPath}")
+            tvTitle.text = dataDetailMovie?.get(0)?.title
+            tvOverview.text = dataDetailMovie?.get(0)?.overview
+            ivBackdrop.loadImage(this@DetailMovieActivity,"https://image.tmdb.org/t/p/original${dataDetailMovie?.get(0)?.backdropPath}")
+            tvReleasedate.text = dataDetailMovie?.get(0)?.releaseDate
+            tvVoteaverage.text = dataDetailMovie?.get(0)?.voteAverage.toString()
+            tvVotecount.text = dataDetailMovie?.get(0)?.voteCount.toString()
+            tvLanguages.text = dataDetailMovie?.get(0)?.spokenLanguagesName.toString()
+            buildListGenre()
         }
     }
 
     private fun onclick() {
         binding.apply {
 
-            btnAddToFavorite.setOnClickListener {
-                GlobalScope.launch {
-                    fillEntity()
-                }
-                finish()
-            }
+//            btnAddToFavorite.setOnClickListener {
+//                GlobalScope.launch {
+//                    fillEntity()
+//                }
+//                finish()
+//            }
         }
     }
 
-    private fun fillEntity() {
-
-//        val idLoved = dataDetailMovie?.get(0)?.id     // data api belom lengkap
-        val idLoved = idChoosen
-//        val titleLoved = dataDetailMovie?.get(0)?.title       // data api belom lengkap
-        val titleLoved = title
-//        val releaseDate = dataDetailMovie?.get(0)?.releaseDate    // data api belom lengkap
-        val releaseDate = releaseDate1
-        val genreName = dataDetailMovie?.get(0)?.genresName
-        val posterPath = posterPath
-
-        Timber.d("check value chosen row: \n idLoved: $idLoved \n titleLoved: $titleLoved \n releaseDate: $releaseDate \n genreName: $genreName \n posterPath: $posterPath")
-
-
-        val loved = LovedEntity(idLoved.toInt(), titleLoved, releaseDate, genreName.toString(), posterPath)
-        db.lovedDao().insert(loved)
-    }
+//    private fun fillEntity() {
+//
+////        val idLoved = dataDetailMovie?.get(0)?.id     // data api belom lengkap
+//        val idLoved = idChoosen
+////        val titleLoved = dataDetailMovie?.get(0)?.title       // data api belom lengkap
+//        val titleLoved = title
+////        val releaseDate = dataDetailMovie?.get(0)?.releaseDate    // data api belom lengkap
+//        val releaseDate = releaseDate1
+//        val genreName = dataDetailMovie?.get(0)?.genresName
+//        val posterPath = posterPath
+//
+//        Timber.d("check value chosen row: \n idLoved: $idLoved \n titleLoved: $titleLoved \n releaseDate: $releaseDate \n genreName: $genreName \n posterPath: $posterPath")
+//
+//
+//        val loved = LovedEntity(idLoved.toInt(), titleLoved, releaseDate, genreName.toString(), posterPath)
+//        db.lovedDao().insert(loved)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

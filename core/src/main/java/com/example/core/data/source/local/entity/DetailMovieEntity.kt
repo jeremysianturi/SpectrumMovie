@@ -15,7 +15,7 @@ data class DetailMovieEntity(
     val backdropPath: String,
 
     @ColumnInfo(name = "belongs_to_collection_id")
-    val belongsToCollectionId: Int,
+    val belongsToCollectionId: Int?,
 
     @ColumnInfo(name = "belongs_to_collection_name")
     val belongsToCollectionName: String,
@@ -82,7 +82,7 @@ data class DetailMovieEntity(
     val releaseDate: String,
 
     @ColumnInfo(name = "revenue")
-    val revenue: Int,
+    val revenue: Long,
 
     @ColumnInfo(name = "runtime")
     val runtime: Int,

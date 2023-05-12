@@ -11,14 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.example.core.data.Resource
 import com.example.core.data.source.local.room.MovieDatabase
 import com.example.core.utils.LovedEntity
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentAwardBinding
 import com.example.mymovies.databinding.FragmentFavoriteBinding
-import com.example.mymovies.ui.fragment.moviedetail.DetailMovieActivity
-import com.example.mymovies.ui.fragment.popularmovies.PopularMoviesAdapterGrid
 import com.example.mymovies.util.dialog.ErrorBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -54,10 +51,10 @@ class FavoriteFragment : Fragment() {
 
         db = Room.databaseBuilder(requireContext(), MovieDatabase::class.java, "loved-db").build()
 
-        GlobalScope.launch {
-            getLovedMovies()
-
-        }
+//        GlobalScope.launch {
+//            getLovedMovies()
+//
+//        }
         buildList()
 
         // search

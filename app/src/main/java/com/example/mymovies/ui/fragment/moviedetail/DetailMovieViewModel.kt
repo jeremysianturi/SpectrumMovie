@@ -18,7 +18,7 @@ class DetailMovieViewModel @ViewModelInject constructor(
 
 
 
-    fun getDetailMovie(movieId: String, apiKey: String, language: String) =
-        detailMovieUsecase.getDetailMovie(movieId, apiKey, language).asLiveData()
+    fun getDetailMovie(movieId: String, apiKey: String) =
+        detailMovieUsecase.getDetailMovie(movieId, apiKey).asLiveData()
 
 }

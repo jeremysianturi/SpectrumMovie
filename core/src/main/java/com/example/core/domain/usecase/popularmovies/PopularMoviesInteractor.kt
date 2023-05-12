@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PopularMoviesInteractor @Inject constructor(private val popularMoviesRepository: PopularMoviesRepository) :
     PopularMoviesUsecase {
 
-    override fun getPopularMovies(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String): Flow<Resource<List<PopularMovies>>> =
-        popularMoviesRepository.getPopularMovies(apiKey, language, sortBy, includeAdult, includeVideo, page)
+    override fun getPopularMovies(apiKey: String,page: String): Flow<Resource<List<PopularMovies>>> =
+        popularMoviesRepository.getPopularMovies(apiKey,page)
 
 }

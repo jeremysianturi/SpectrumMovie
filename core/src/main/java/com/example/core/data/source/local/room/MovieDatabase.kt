@@ -9,9 +9,11 @@ import com.example.core.utils.LovedEntity
 
 @Database(
     entities = [
-        BannerEntity::class,
+        NowPlayingEntity::class,
         PopularMoviesEntity::class,
-        ComingSoonEntity::class,
+        TopRatedEntity::class,
+        UpcomingEntity::class,
+        GenreEntity::class,
         DetailMovieEntity::class,
         PopularMoviesGridEntity::class,
         LovedEntity::class,
@@ -22,11 +24,15 @@ import com.example.core.utils.LovedEntity
 
 abstract class MovieDatabase : RoomDatabase() {
 
-    abstract fun bannerDao(): BannerDao
+    abstract fun nowPlayingDao(): NowPlayingDao
 
     abstract fun popularMoviesDao(): PopularMoviesDao
 
-    abstract fun comingSoonDao(): ComingSoonDao
+    abstract fun topRatedDao(): TopRatedDao
+
+    abstract fun upcomingDao(): UpcomingDao
+
+    abstract fun genreDao(): GenreDao
 
     abstract fun detailMovieDao(): DetailMovieDao
 

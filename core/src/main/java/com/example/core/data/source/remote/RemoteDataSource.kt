@@ -2,11 +2,13 @@ package com.example.core.data.source.remote
 
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.network.ApiService
-import com.example.core.data.source.remote.response.banner.BannerResponse
-import com.example.core.data.source.remote.response.comingsoon.ComingSoonResponse
+import com.example.core.data.source.remote.response.nowplaying.NowPlayingResponse
+import com.example.core.data.source.remote.response.toprated.TopRatedResponse
 import com.example.core.data.source.remote.response.detailmovie.DetailMovieResponse
+import com.example.core.data.source.remote.response.genre.GenreResponse
 import com.example.core.data.source.remote.response.popularmovies.PopularMovieResponse
 import com.example.core.data.source.remote.response.popularmoviesgrid.PopularMovieGridResponse
+import com.example.core.data.source.remote.response.upcoming.UpcomingResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,17 +24,13 @@ class RemoteDataSource @Inject constructor(
 
     private val tag = RemoteDataSource::class.java.simpleName.toString()
 
-    suspend fun getBanner(
+    suspend fun getNowPlaying(
         apiKey: String,
-        language: String,
-        sortBy: String,
-        includeAdult: Boolean,
-        includeVideo: Boolean,
         page: String
-    ): Flow<ApiResponse<List<BannerResponse>>> {
+    ): Flow<ApiResponse<List<NowPlayingResponse>>> {
         return flow {
             try {
-                val response = apiService.getBanner(apiKey, language, sortBy, includeAdult, includeVideo, page)
+                val response = apiService.getNowPlaying(apiKey, page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))
@@ -47,15 +45,11 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getPopularMovies(
         apiKey: String,
-        language: String,
-        sortBy: String,
-        includeAdult: Boolean,
-        includeVideo: Boolean,
         page: String
     ): Flow<ApiResponse<List<PopularMovieResponse>>> {
         return flow {
             try {
-                val response = apiService.getPopularMovies(apiKey, language, sortBy, includeAdult, includeVideo, page)
+                val response = apiService.getPopularMovies(apiKey,page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))
@@ -68,21 +62,53 @@ class RemoteDataSource @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getComingSoon(
+    suspend fun getTopRated(
         apiKey: String,
-        language: String,
-        sortBy: String,
-        includeAdult: Boolean,
-        includeVideo: Boolean,
-        page: String,
-        year: String
-    ): Flow<ApiResponse<List<ComingSoonResponse>>> {
+        page: String
+    ): Flow<ApiResponse<List<TopRatedResponse>>> {
         return flow {
             try {
-                val response = apiService.getComingSoon(apiKey, language, sortBy, includeAdult, includeVideo, page,year)
+                val response = apiService.getTopRated(apiKey,page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getUpcoming(
+        apiKey: String,
+        page: String
+    ): Flow<ApiResponse<List<UpcomingResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getUpcoming(apiKey,page)
+                val dataArray = response.results
+                if (dataArray.isNotEmpty()) {
+                    emit(ApiResponse.Success(response.results))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getGenre(
+        apiKey: String
+    ): Flow<ApiResponse<List<GenreResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getGenre(apiKey)
+                val dataArray = response.genres
+                if (dataArray.isNotEmpty()) {
+                    emit(ApiResponse.Success(response.genres))
                 } else {
                     emit(ApiResponse.Empty)
                 }
@@ -94,16 +120,15 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getDetailMovie(
         movieId: String,
-        apiKey: String,
-        language: String
+        apiKey: String
     ): Flow<ApiResponse<DetailMovieResponse>> {
         return flow {
             try {
-                val response = apiService.getDetailMovie(movieId,apiKey, language)
-                val dataArray = response.data
+                val response = apiService.getDetailMovie(movieId,apiKey)
+                val dataArray = response
                 Timber.d("check data array di remote data source: $dataArray")
                 if (dataArray.toString() != "null") {
-                    emit(ApiResponse.Success(response.data))
+                    emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Empty)
                 }
@@ -115,16 +140,11 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getPopularMoviesGrid(
         apiKey: String,
-        language: String,
-        sortBy: String,
-        includeAdult: Boolean,
-        includeVideo: Boolean,
-        page: String,
-        year: String
+        page: String
     ): Flow<ApiResponse<List<PopularMovieGridResponse>>> {
         return flow {
             try {
-                val response = apiService.getPopularMoviesGrid(apiKey, language, sortBy, includeAdult, includeVideo, page,year)
+                val response = apiService.getPopularMoviesGrid(apiKey,page)
                 val dataArray = response.results
                 if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.results))
