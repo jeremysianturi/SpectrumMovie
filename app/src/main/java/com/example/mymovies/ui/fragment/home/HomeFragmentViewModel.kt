@@ -9,6 +9,8 @@ import com.example.core.domain.usecase.popularmovies.PopularMoviesUsecase
 import com.example.core.domain.usecase.toprated.TopRatedUsecase
 import com.example.core.domain.usecase.upcoming.UpcomingUsecase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 
 @ExperimentalCoroutinesApi
 class HomeFragmentViewModel @ViewModelInject constructor(
@@ -19,9 +21,9 @@ class HomeFragmentViewModel @ViewModelInject constructor(
     private val genreUsecase: GenreUsecase,
 ) : ViewModel() {
 
-    // search by
-//    val searchQuery = MutableStateFlow("")
-//    private fun bannerFlow(apiKey: String, language: String, sortBy: String, includeAdult: Boolean, includeVideo: Boolean, page: String) = searchQuery.flatMapLatest { nowPlayingUsecase.getSearchBusinesses(searchBy,it,sortBy) }
+//     search by
+//    val genreQuery = MutableStateFlow("")
+//    private fun genreFlow(genreIds: List<Int>) = genreQuery.flatMapLatest { genreUsecase.getSearchGenreIds(genreIds,it,sortBy) }
 //    fun search(searchBy: String, sortBy: String) = businessesFlow(searchBy,sortBy).asLiveData()
 
     fun getNowPlaying(apiKey: String, page: String) =

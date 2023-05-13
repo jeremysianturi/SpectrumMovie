@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.moviedetail.DetailMovieActivity">
+    tools:context=".ui.activity.moviedetail.DetailMovieActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,11 +15,11 @@
             android:id="@+id/iv_poster_detail"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_marginTop="@dimen/dimen_16"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ll_button">
+            app:layout_constraintTop_toTopOf="parent">
         </ImageView>
 
         <LinearLayout
@@ -31,8 +31,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster_detail"
-            app:layout_constraintBottom_toTopOf="@id/tv_title_overview">
+            app:layout_constraintTop_toBottomOf="@id/iv_poster_detail">
 
             <TextView
                 android:id="@+id/tv_status"
@@ -64,8 +63,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_button"
-            app:layout_constraintBottom_toTopOf="@id/tv_title">
+            app:layout_constraintTop_toBottomOf="@id/ll_button">
         </TextView>
 
         <TextView
@@ -75,8 +73,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_title"
-            app:layout_constraintBottom_toTopOf="@id/tv_title_overview">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_title">
         </TextView>
 
         <TextView
@@ -89,8 +86,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintBottom_toTopOf="@id/tv_overview">
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
         </TextView>
 
         <TextView
@@ -100,8 +96,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_overview"
-            app:layout_constraintBottom_toTopOf="@id/tv_title_backdrop">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_overview">
         </TextView>
 
         <TextView
@@ -114,8 +109,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_overview"
-            app:layout_constraintBottom_toTopOf="@id/iv_backdrop">
+            app:layout_constraintTop_toBottomOf="@id/tv_overview">
         </TextView>
 
         <ImageView
@@ -125,8 +119,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_backdrop"
-            app:layout_constraintBottom_toTopOf="@id/tv_title_releasedate">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_backdrop">
         </ImageView>
 
         <TextView
@@ -137,8 +130,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintBottom_toTopOf="@id/tv_releasedate">
+            app:layout_constraintTop_toBottomOf="@id/iv_backdrop">
         </TextView>
 
         <TextView
@@ -148,8 +140,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_releasedate"
-            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_releasedate">
         </TextView>
 
         <TextView
@@ -160,8 +151,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_releasedate"
-            app:layout_constraintBottom_toTopOf="@id/tv_voteaverage">
+            app:layout_constraintTop_toBottomOf="@id/tv_releasedate">
         </TextView>
 
         <TextView
@@ -171,8 +161,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_voteaverage"
-            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_voteaverage">
         </TextView>
 
         <TextView
@@ -183,8 +172,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_voteaverage"
-            app:layout_constraintBottom_toTopOf="@id/tv_votecount">
+            app:layout_constraintTop_toBottomOf="@id/tv_voteaverage">
         </TextView>
 
         <TextView
@@ -194,8 +182,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_votecount"
-            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_votecount">
         </TextView>
 
         <TextView
@@ -206,8 +193,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_votecount"
-            app:layout_constraintBottom_toTopOf="@id/tv_languages">
+            app:layout_constraintTop_toBottomOf="@id/tv_votecount">
         </TextView>
 
         <TextView
@@ -217,8 +203,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_languages"
-            app:layout_constraintBottom_toTopOf="@id/rv_genre">
+            app:layout_constraintTop_toBottomOf="@id/tv_title_languages">
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -5,79 +5,79 @@ import com.google.gson.annotations.SerializedName
 data class DetailMovieResponse (
 
     @field:SerializedName("adult")
-    val adult: Boolean,
+    val adult: Boolean?,
 
     @field:SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
     @field:SerializedName("belongs_to_collection")
-    val belongsToCollection: BelongsToCollectionResponse,
+    val belongsToCollection: BelongsToCollectionResponse?,
 
     @field:SerializedName("budget")
-    val budget: Int,
+    val budget: Int?,
 
     @field:SerializedName("genres")
-    val genres: List<GenresResponse>,
+    val genres: List<GenresResponse>?,
 
     @field:SerializedName("homepage")
-    val homepage: String,
+    val homepage: String?,
 
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @field:SerializedName("imdb_id")
-    val imdbId: String,
+    val imdbId: String?,
 
     @field:SerializedName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
 
     @field:SerializedName("original_title")
-    val originalTitle: String,
+    val originalTitle: String?,
 
     @field:SerializedName("overview")
-    val overview: String,
+    val overview: String?,
 
     @field:SerializedName("popularity")
-    val popularity: Double,
+    val popularity: Double?,
 
     @field:SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @field:SerializedName("production_companies")
-    val productionCompanies: List<ProductionCompanyResponse>,
+    val productionCompanies: List<ProductionCompanyResponse>?,
 
     @field:SerializedName("production_countries")
-    val productionCountries: List<ProductionCountriesResponse>,
+    val productionCountries: List<ProductionCountriesResponse>?,
 
     @field:SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
 
     @field:SerializedName("revenue")
-    val revenue: Long,
+    val revenue: Long?,
 
     @field:SerializedName("runtime")
-    val runtime: Int,
+    val runtime: Int?,
 
     @field:SerializedName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguageResponse>,
+    val spokenLanguages: List<SpokenLanguageResponse>?,
 
     @field:SerializedName("status")
-    val status: String,
+    val status: String?,
 
     @field:SerializedName("tagline")
-    val tagline: String,
+    val tagline: String?,
 
     @field:SerializedName("title")
-    val title: String,
+    val title: String?,
 
     @field:SerializedName("video")
-    val video: Boolean,
+    val video: Boolean?,
 
     @field:SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
 
     @field:SerializedName("vote_count")
-    val voteCount: Int,
+    val voteCount: Int?,
 
 
 

@@ -21,5 +21,4 @@ interface UpcomingDao {
         deleteUpcoming()
         insertUpcoming(upcoming)
     }
-
 }

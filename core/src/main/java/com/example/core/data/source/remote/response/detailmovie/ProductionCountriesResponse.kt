@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class ProductionCountriesResponse (
 
     @field:SerializedName("iso_3166_1")
-    val iso_3166_1: String,
+    val iso_3166_1: String?,
 
     @field:SerializedName("name")
-    val name: String
+    val name: String?
 
 
     )

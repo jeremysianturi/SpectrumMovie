@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.fragment.popularmovies
+package com.example.mymovies.ui.fragment.award
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.data.Resource
 import com.example.mymovies.databinding.FragmentAwardBinding
 import com.example.mymovies.helper.Constant
-import com.example.mymovies.ui.fragment.moviedetail.DetailMovieActivity
+import com.example.mymovies.ui.activity.moviedetail.DetailMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -22,11 +22,11 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class PopularMoviesFragment : Fragment() {
+class AwardFragment : Fragment() {
 
     private lateinit var binding: FragmentAwardBinding
-    private lateinit var adapterPopularMoviesGrid : PopularMoviesAdapterGrid
-    private val popularMovieGridViewModel : PopularMoviesGridViewModel by viewModels()
+    private lateinit var adapterPopularMoviesGrid : AwardAdapterGrid
+    private val popularMovieGridViewModel : AwardViewModel by viewModels()
 
     private var apiKey = Constant.API_KEY
     private var includeAdult = false
@@ -86,7 +86,7 @@ class PopularMoviesFragment : Fragment() {
 
     private fun buildListPopularMoviesGrid() {
 
-        adapterPopularMoviesGrid = PopularMoviesAdapterGrid()
+        adapterPopularMoviesGrid = AwardAdapterGrid()
         binding.rvGridview.setHasFixedSize(true)
         binding.rvGridview.layoutManager = GridLayoutManager(activity,2)
 //            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

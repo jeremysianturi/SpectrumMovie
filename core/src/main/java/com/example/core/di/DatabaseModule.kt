@@ -42,6 +42,9 @@ class DatabaseModule {
     fun provideDetailMovieDao(database: MovieDatabase): DetailMovieDao = database.detailMovieDao()
 
     @Provides
+    fun provideSearchDao(database: MovieDatabase): SearchDao = database.searchDao()
+
+    @Provides
     fun providePopularMoviesGridDao(database: MovieDatabase): PopularMoviesGridDao = database.popularMoviesGridDao()
 
     @Provides

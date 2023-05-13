@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MyMovies"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.fragment.moviedetail.DetailMovieActivity"
+            android:name=".ui.activity.moviedetail.DetailMovieActivity"
             android:exported="false" />
         <activity
             android:name=".ui.HomeScreen"

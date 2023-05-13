@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.fragment.moviedetail
+package com.example.mymovies.ui.activity.moviedetail
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

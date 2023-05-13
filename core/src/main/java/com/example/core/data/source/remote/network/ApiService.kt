@@ -7,6 +7,7 @@ import com.example.core.data.source.remote.response.detailmovie.ListDetailMovieR
 import com.example.core.data.source.remote.response.genre.ListGenreResponse
 import com.example.core.data.source.remote.response.popularmovies.ListPopularMoviesResponse
 import com.example.core.data.source.remote.response.popularmoviesgrid.ListPopularMovieGridResponse
+import com.example.core.data.source.remote.response.search.ListSearchResponse
 import com.example.core.data.source.remote.response.upcoming.ListUpcomingResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -55,6 +56,14 @@ interface ApiService {
         @Path(value = "movieId",encoded = true) movieId : String,
         @Query("api_key") apiKey: String,
     ): DetailMovieResponse
+
+    // search
+    @GET("search/movie")
+    suspend fun getSearch (
+        @Query("api_key") apiKey: String,
+        @Query(value = "query",encoded = true) query : String,
+        @Query("page") page: String
+    ): ListSearchResponse
 
 
     // popular movies grid

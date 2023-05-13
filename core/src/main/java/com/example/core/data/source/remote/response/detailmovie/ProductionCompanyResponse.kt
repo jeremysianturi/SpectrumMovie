@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName
 data class ProductionCompanyResponse (
 
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @field:SerializedName("logo_path")
-    val logoPath: String,
+    val logoPath: String?,
 
     @field:SerializedName("name")
-    val name: String,
+    val name: String?,
 
     @field:SerializedName("origin_country")
-    val originCountry: String,
+    val originCountry: String?,
 
 
 )

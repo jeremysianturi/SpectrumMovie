@@ -8,13 +8,13 @@ data class BelongsToCollectionResponse (
     val id: Int?,
 
     @field:SerializedName("name")
-    val name: String,
+    val name: String?,
 
     @field:SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @field:SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
 
     )

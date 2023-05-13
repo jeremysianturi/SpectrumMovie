@@ -14,6 +14,7 @@ class LocalDataSource @Inject constructor(
     private val mUpcomingDao: UpcomingDao,
     private val mGenreDao: GenreDao,
     private val mDetailMovieDao: DetailMovieDao,
+    private val mSearchDao: SearchDao,
     private val mPopularMoviesGridDao: PopularMoviesGridDao,
 ) {
 
@@ -49,6 +50,10 @@ class LocalDataSource @Inject constructor(
     suspend fun insertDetailMovie(detailMovie: List<DetailMovieEntity>) = mDetailMovieDao.insertAndDeleteDetailMovie(detailMovie)
     suspend fun deleteDetailMovie() = mDetailMovieDao.deleteDetailMovie()
 
+    // Search
+    fun getSearch(): Flow<List<SearchEntity>> = mSearchDao.getSearch()
+    suspend fun insertSearch(search: List<SearchEntity>) = mSearchDao.insertAndDeleteSearch(search)
+    suspend fun deleteSearch() = mSearchDao.deleteSearch()
 
     // Popular Movies Grid
     fun getPopularMoviesGrid(): Flow<List<PopularMoviesGridEntity>> = mPopularMoviesGridDao.getPopularMoviesGrid()

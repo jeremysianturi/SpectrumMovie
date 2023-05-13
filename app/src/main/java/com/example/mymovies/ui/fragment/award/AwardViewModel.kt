@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.fragment.popularmovies
+package com.example.mymovies.ui.fragment.award
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 
 @ExperimentalCoroutinesApi
-class PopularMoviesGridViewModel @ViewModelInject constructor(
+class AwardViewModel @ViewModelInject constructor(
     private val popularMoviesGridUsecase: PopularMoviesGridUsecase,
 ) : ViewModel() {
 

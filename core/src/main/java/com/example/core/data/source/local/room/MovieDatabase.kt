@@ -15,6 +15,7 @@ import com.example.core.utils.LovedEntity
         UpcomingEntity::class,
         GenreEntity::class,
         DetailMovieEntity::class,
+        SearchEntity::class,
         PopularMoviesGridEntity::class,
         LovedEntity::class,
     ],
@@ -35,6 +36,8 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun genreDao(): GenreDao
 
     abstract fun detailMovieDao(): DetailMovieDao
+
+    abstract fun searchDao(): SearchDao
 
     abstract fun popularMoviesGridDao(): PopularMoviesGridDao
 

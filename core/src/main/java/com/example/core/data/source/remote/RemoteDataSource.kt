@@ -8,6 +8,7 @@ import com.example.core.data.source.remote.response.detailmovie.DetailMovieRespo
 import com.example.core.data.source.remote.response.genre.GenreResponse
 import com.example.core.data.source.remote.response.popularmovies.PopularMovieResponse
 import com.example.core.data.source.remote.response.popularmoviesgrid.PopularMovieGridResponse
+import com.example.core.data.source.remote.response.search.SearchResponse
 import com.example.core.data.source.remote.response.upcoming.UpcomingResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -129,6 +130,26 @@ class RemoteDataSource @Inject constructor(
                 Timber.d("check data array di remote data source: $dataArray")
                 if (dataArray.toString() != "null") {
                     emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getSearch(
+        apiKey: String,
+        query: String,
+        page: String
+    ): Flow<ApiResponse<List<SearchResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getSearch(apiKey,query,page)
+                val dataArray = response.results
+                if (dataArray.isNotEmpty()) {
+                    emit(ApiResponse.Success(response.results))
                 } else {
                     emit(ApiResponse.Empty)
                 }

@@ -11,6 +11,8 @@ import com.example.core.domain.usecase.popularmovies.PopularMoviesInteractor
 import com.example.core.domain.usecase.popularmovies.PopularMoviesUsecase
 import com.example.core.domain.usecase.popularmoviesgrid.PopularMoviesGridInteractor
 import com.example.core.domain.usecase.popularmoviesgrid.PopularMoviesGridUsecase
+import com.example.core.domain.usecase.search.SearchInteractor
+import com.example.core.domain.usecase.search.SearchUsecase
 import com.example.core.domain.usecase.toprated.TopRatedUsecase
 import com.example.core.domain.usecase.upcoming.UpcomingInteractor
 import com.example.core.domain.usecase.upcoming.UpcomingUsecase
@@ -40,6 +42,9 @@ abstract class AppModule {
 
     @Binds
     abstract fun provideDetailMovieUsecase(detailMovieInteractor: DetailMovieInteractor): DetailMovieUsecase
+
+    @Binds
+    abstract fun provideSearchUsecase(searchInteractor: SearchInteractor): SearchUsecase
 
     @Binds
     abstract fun providePopularMoviesGridUsecase(popularMoviesGridInteractor: PopularMoviesGridInteractor): PopularMoviesGridUsecase

@@ -26,7 +26,7 @@ import com.example.mymovies.ui.fragment.home.nowplaying.SliderAdapter
 import com.example.mymovies.ui.fragment.home.popularmovies.PopularMoviesAdapter
 import com.example.mymovies.ui.fragment.home.toprated.TopRatedAdapter
 import com.example.mymovies.ui.fragment.home.upcoming.UpcomingAdapter
-import com.example.mymovies.ui.fragment.moviedetail.DetailMovieActivity
+import com.example.mymovies.ui.activity.moviedetail.DetailMovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapterTopRated : TopRatedAdapter
     private lateinit var adapterUpcoming : UpcomingAdapter
     private lateinit var adapterGenre : GenreAdapter
-    private val homeFragmentViewModel : HomeFragmentViewModel by viewModels()
+    val homeFragmentViewModel : HomeFragmentViewModel by viewModels()
 
     private var currentPage = 0
     private var numPages = 0
@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
                     is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBarHome.visibility = View.GONE
-                        createSlider2(data.data!!)
+                        createSlider(data.data!!)
                         Timber.tag(tag).d("observer_business_adapter ${data.data}")
                     }
                     is Resource.Error -> {
@@ -100,8 +100,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun createSlider2(string: List<NowPlaying>) {
-        val adapterNowPlaying = SliderAdapter(this.requireContext(), string)
+    private fun createSlider(string: List<NowPlaying>) {
+        val adapterNowPlaying = SliderAdapter(this.requireContext(), string, homeFragmentViewModel)
         binding.vpSlider.adapter = adapterNowPlaying
         val density = resources.displayMetrics.density
         numPages = string.size

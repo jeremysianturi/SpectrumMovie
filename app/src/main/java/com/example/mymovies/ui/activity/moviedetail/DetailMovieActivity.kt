@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.fragment.moviedetail
+package com.example.mymovies.ui.activity.moviedetail
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -91,7 +91,6 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun buildListGenre() {
-
         adapterGenre = GenreAdapter()
         binding.rvGenre.setHasFixedSize(true)
         binding.rvGenre.layoutManager =
