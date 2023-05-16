@@ -2,6 +2,8 @@ package com.example.core.data.source.remote
 
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.network.ApiService
+import com.example.core.data.source.remote.post.LovedPost
+import com.example.core.data.source.remote.response.SubmitResponse
 import com.example.core.data.source.remote.response.nowplaying.NowPlayingResponse
 import com.example.core.data.source.remote.response.toprated.TopRatedResponse
 import com.example.core.data.source.remote.response.detailmovie.DetailMovieResponse
@@ -176,6 +178,23 @@ class RemoteDataSource @Inject constructor(
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postLoved(lovedPost: LovedPost): Flow<ApiResponse<SubmitResponse>> {
+        return flow {
+            try {
+                val response = apiService.postLoved(lovedPost)
+                val data = response.message
+                if (data.isEmpty()) {
+                    emit(ApiResponse.Empty)
+                } else {
+                    emit(ApiResponse.Success(response))
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+
     }
 
 }

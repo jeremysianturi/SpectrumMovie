@@ -1,5 +1,6 @@
 package com.example.mymovies.ui.fragment.home
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -21,10 +22,12 @@ class HomeFragmentViewModel @ViewModelInject constructor(
     private val genreUsecase: GenreUsecase,
 ) : ViewModel() {
 
-//     search by
-//    val genreQuery = MutableStateFlow("")
-//    private fun genreFlow(genreIds: List<Int>) = genreQuery.flatMapLatest { genreUsecase.getSearchGenreIds(genreIds,it,sortBy) }
-//    fun search(searchBy: String, sortBy: String) = businessesFlow(searchBy,sortBy).asLiveData()
+//     mapping genre by Id's
+    val genreQuery = MutableStateFlow(listOf(0))
+    private val genreFlow = genreQuery.flatMapLatest {
+        genreUsecase.getSearchGenreIds(it)
+    }
+    val search = genreFlow.asLiveData()
 
     fun getNowPlaying(apiKey: String, page: String) =
         nowPlayingUsecase.getNowPlaying(apiKey,page).asLiveData()

@@ -22,4 +22,4 @@ data class LovedEntity(
 
     @ColumnInfo(name = "poster_path")
     val posterPath: String
-    )
+)

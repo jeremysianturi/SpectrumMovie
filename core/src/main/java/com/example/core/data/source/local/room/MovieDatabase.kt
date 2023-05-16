@@ -43,5 +43,4 @@ abstract class MovieDatabase : RoomDatabase() {
 
     abstract fun lovedDao(): LovedDao
 
-
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.core.data.Resource
 import com.example.core.domain.model.Genre
 import com.example.core.domain.model.NowPlaying
@@ -27,6 +28,7 @@ import com.example.mymovies.ui.fragment.home.popularmovies.PopularMoviesAdapter
 import com.example.mymovies.ui.fragment.home.toprated.TopRatedAdapter
 import com.example.mymovies.ui.fragment.home.upcoming.UpcomingAdapter
 import com.example.mymovies.ui.activity.moviedetail.DetailMovieActivity
+import com.example.mymovies.ui.fragment.home.nowplaying.NowPlayingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -39,19 +41,14 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapterNowPlaying : NowPlayingAdapter
     private lateinit var adapterPopularMovies : PopularMoviesAdapter
     private lateinit var adapterTopRated : TopRatedAdapter
     private lateinit var adapterUpcoming : UpcomingAdapter
     private lateinit var adapterGenre : GenreAdapter
     val homeFragmentViewModel : HomeFragmentViewModel by viewModels()
-
-    private var currentPage = 0
-    private var numPages = 0
-
-    // param
     private var apiKey = Constant.API_KEY
     private var page = "1"
-//    private var year = Calendar.getInstance().get(Calendar.YEAR).toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +62,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserverNowPlaying(apiKey,page)
+        buildListNowPlaying()
         setupObserverPopularMovies(apiKey,page)
         buildListPopularMovies()
         setupObserverTopRated(apiKey,page)
@@ -85,6 +83,7 @@ class HomeFragment : Fragment() {
                     is Resource.Loading -> binding.progressBarHome.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBarHome.visibility = View.GONE
+                        adapterNowPlaying.setData(data.data,viewLifecycleOwner, homeFragmentViewModel)
                         createSlider(data.data!!)
                         Timber.tag(tag).d("observer_business_adapter ${data.data}")
                     }
@@ -101,23 +100,34 @@ class HomeFragment : Fragment() {
     }
 
     private fun createSlider(string: List<NowPlaying>) {
-        val adapterNowPlaying = SliderAdapter(this.requireContext(), string, homeFragmentViewModel)
+        val adapterNowPlaying = SliderAdapter(this.requireContext(), string,viewLifecycleOwner, homeFragmentViewModel)
         binding.vpSlider.adapter = adapterNowPlaying
-        val density = resources.displayMetrics.density
-        numPages = string.size
 
-        val update = Runnable {
-            if (currentPage === numPages) {
-                currentPage = 0
-            }
-            binding.vpSlider.setCurrentItem(currentPage++, true)
+    }
+
+    private fun buildListNowPlaying() {
+
+        adapterNowPlaying = NowPlayingAdapter()
+        binding.rvNowPlaying.setHasFixedSize(true)
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvNowPlaying)
+        binding.rvNowPlaying.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvNowPlaying.adapter = adapterNowPlaying
+
+
+        binding.rvNowPlaying.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
+
+        adapterNowPlaying.onItemClick = { selectData ->
+            val mIntent = Intent(activity, DetailMovieActivity::class.java)
+            mIntent.putExtra("id_choosen", selectData.id)
+            startActivity(mIntent)
         }
-        val swipeTimer = Timer()
-        swipeTimer.schedule(object : TimerTask() {
-            override fun run() {
-                Handler(Looper.getMainLooper()).post(update)
-            }
-        }, 5000, 5000)
     }
     // NowPlaying
 

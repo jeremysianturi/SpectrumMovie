@@ -37,8 +37,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_now_playing"
-            app:layout_constraintBottom_toTopOf="@id/spinner">
+            app:layout_constraintBottom_toTopOf="@id/rv_now_playing">
         </androidx.viewpager.widget.ViewPager>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_now_playing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/recycler_item"
+            android:layout_marginBottom="16dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vpSlider"
+            app:layout_constraintBottom_toTopOf="@id/spinner">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Spinner
             android:id="@+id/spinner"
@@ -47,7 +60,7 @@
             android:layout_marginBottom="16dp"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vpSlider"
+            app:layout_constraintTop_toBottomOf="@id/rv_now_playing"
             app:layout_constraintBottom_toTopOf="@id/tv_popular_movies">
         </Spinner>
 

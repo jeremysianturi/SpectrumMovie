@@ -2,6 +2,7 @@ package com.example.core.data.source.local.room.dao
 
 import androidx.room.*
 import com.example.core.data.source.local.entity.GenreEntity
+import com.example.core.data.source.local.entity.PopularMoviesGridEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -22,5 +23,10 @@ interface GenreDao {
         deleteGenre()
         insertGenre(genre)
     }
+
+    @Transaction
+//    @Query("SELECT * FROM genre WHERE id LIKE '%'|| :genreIds || '%'")
+    @Query("SELECT * FROM genre WHERE id IN (:genreIds)")
+    fun getSearchGenre(genreIds: List<Int>): Flow<List<GenreEntity>>
 
 }

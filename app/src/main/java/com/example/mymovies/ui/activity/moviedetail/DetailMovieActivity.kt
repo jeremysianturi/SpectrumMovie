@@ -39,6 +39,8 @@ class DetailMovieActivity : AppCompatActivity() {
     private var dataDetailMovie : List<DetailMovie>? = null
     private var apiKey = Constant.API_KEY
     private lateinit var idChoosen: String
+    private lateinit var posterPath: String
+    private lateinit var releaseDate1: String
 
     // loved
     lateinit var db: MovieDatabase
@@ -87,7 +89,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
             }
         }
-
     }
 
     private fun buildListGenre() {
@@ -118,38 +119,42 @@ class DetailMovieActivity : AppCompatActivity() {
             tvVotecount.text = dataDetailMovie?.get(0)?.voteCount.toString()
             tvLanguages.text = dataDetailMovie?.get(0)?.spokenLanguagesName.toString()
             buildListGenre()
+
+            title = dataDetailMovie?.get(0)?.title
+            releaseDate1 = dataDetailMovie?.get(0)?.releaseDate.toString()
+            posterPath = dataDetailMovie?.get(0)?.posterPath.toString()
         }
     }
 
     private fun onclick() {
         binding.apply {
 
-//            btnAddToFavorite.setOnClickListener {
-//                GlobalScope.launch {
-//                    fillEntity()
-//                }
-//                finish()
-//            }
+            btnAddToFavorite.setOnClickListener {
+                GlobalScope.launch {
+                    fillEntity()
+                }
+                finish()
+            }
         }
     }
 
-//    private fun fillEntity() {
-//
-////        val idLoved = dataDetailMovie?.get(0)?.id     // data api belom lengkap
-//        val idLoved = idChoosen
-////        val titleLoved = dataDetailMovie?.get(0)?.title       // data api belom lengkap
-//        val titleLoved = title
-////        val releaseDate = dataDetailMovie?.get(0)?.releaseDate    // data api belom lengkap
-//        val releaseDate = releaseDate1
-//        val genreName = dataDetailMovie?.get(0)?.genresName
-//        val posterPath = posterPath
-//
-//        Timber.d("check value chosen row: \n idLoved: $idLoved \n titleLoved: $titleLoved \n releaseDate: $releaseDate \n genreName: $genreName \n posterPath: $posterPath")
-//
-//
-//        val loved = LovedEntity(idLoved.toInt(), titleLoved, releaseDate, genreName.toString(), posterPath)
-//        db.lovedDao().insert(loved)
-//    }
+    private fun fillEntity() {
+
+//        val idLoved = dataDetailMovie?.get(0)?.id     // data api belom lengkap
+        val idLoved = idChoosen
+//        val titleLoved = dataDetailMovie?.get(0)?.title       // data api belom lengkap
+        val titleLoved = title.toString()
+//        val releaseDate = dataDetailMovie?.get(0)?.releaseDate    // data api belom lengkap
+        val releaseDate = releaseDate1
+        val genreName = dataDetailMovie?.get(0)?.genresName
+        val posterPath = posterPath
+
+        Timber.d("check value chosen row: \n idLoved: $idLoved \n titleLoved: $titleLoved \n releaseDate: $releaseDate \n genreName: $genreName \n posterPath: $posterPath")
+
+
+        val loved = LovedEntity(idLoved.toInt(), titleLoved, releaseDate, genreName.toString(), posterPath)
+        db.lovedDao().insert(loved)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

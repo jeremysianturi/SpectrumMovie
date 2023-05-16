@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface GenreUsecase {
     fun getGenre(apiKey: String): Flow<Resource<List<Genre>>>
 
-//    fun getSearchGenreIds(genreIds: List<Int>): Flow<List<Genre>>
+    fun getSearchGenreIds(genreIds: List<Int>): Flow<List<Genre>>
 }

@@ -14,6 +14,9 @@ interface LovedDao {
     @Delete
     fun delete(book: LovedEntity)
 
+    @Query("DELETE FROM loved WHERE id = :movieId")
+    fun deleteById(movieId: Long)
+
     @Transaction
     @Query("SELECT * FROM loved where title LIKE '%'|| :search || '%'")
     fun getSearchLoved(search: String): Flow<List<LovedEntity>>

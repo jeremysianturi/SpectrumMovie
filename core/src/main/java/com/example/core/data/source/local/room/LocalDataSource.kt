@@ -2,6 +2,8 @@ package com.example.core.data.source.local.room
 
 import com.example.core.data.source.local.entity.*
 import com.example.core.data.source.local.room.dao.*
+import com.example.core.utils.LovedDao
+import com.example.core.utils.LovedEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,6 +46,8 @@ class LocalDataSource @Inject constructor(
     fun getGenre(): Flow<List<GenreEntity>> = mGenreDao.getGenre()
     suspend fun insertGenre(genre: List<GenreEntity>) = mGenreDao.insertAndDeleteGenre(genre)
     suspend fun deleteGenre() = mGenreDao.deleteGenre()
+    fun getSearchGenre(genreIds: List<Int>): Flow<List<GenreEntity>> =
+        mGenreDao.getSearchGenre(genreIds)
 
     // Detail Movie
     fun getDetailMovie(): Flow<List<DetailMovieEntity>> = mDetailMovieDao.getDetailMovie()

@@ -1,5 +1,7 @@
 package com.example.core.data.source.remote.network
 
+import com.example.core.data.source.remote.post.LovedPost
+import com.example.core.data.source.remote.response.SubmitResponse
 import com.example.core.data.source.remote.response.detailmovie.DetailMovieResponse
 import com.example.core.data.source.remote.response.nowplaying.ListNowPlayingResponse
 import com.example.core.data.source.remote.response.toprated.ListTopRatedResponse
@@ -9,9 +11,7 @@ import com.example.core.data.source.remote.response.popularmovies.ListPopularMov
 import com.example.core.data.source.remote.response.popularmoviesgrid.ListPopularMovieGridResponse
 import com.example.core.data.source.remote.response.search.ListSearchResponse
 import com.example.core.data.source.remote.response.upcoming.ListUpcomingResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -72,4 +72,9 @@ interface ApiService {
         @Query("api_key") apiKey: String,
         @Query("page") page: String,
     ): ListPopularMovieGridResponse
+
+    @POST("/api/loved")
+    suspend fun postLoved(
+        @Body lovedPost: LovedPost
+    ): SubmitResponse
 }

@@ -7,8 +7,10 @@ import com.example.core.data.source.remote.RemoteDataSource
 import com.example.core.data.source.remote.network.ApiResponse
 import com.example.core.data.source.remote.response.genre.GenreResponse
 import com.example.core.domain.model.Genre
+import com.example.core.domain.model.PopularMoviesGrid
 import com.example.core.domain.repository.IGenreRepository
 import com.example.core.helper.helpermapper.DataMapperGenre
+import com.example.core.helper.helpermapper.DataMapperPopularMoviesGrid
 import com.example.core.utils.AppExecutors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -48,4 +50,10 @@ class GenreRepository @Inject constructor(
             }
 
         }.asFlow()
+
+    override fun getSearchGenre(genreIds: List<Int>): Flow<List<Genre>> {
+        return localDataSource.getSearchGenre(genreIds).map {
+            DataMapperGenre.mapEntitiestoDomain(it)
+        }
+    }
 }

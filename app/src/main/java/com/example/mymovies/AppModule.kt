@@ -48,4 +48,5 @@ abstract class AppModule {
 
     @Binds
     abstract fun providePopularMoviesGridUsecase(popularMoviesGridInteractor: PopularMoviesGridInteractor): PopularMoviesGridUsecase
+
 }
