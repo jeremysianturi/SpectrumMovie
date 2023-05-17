@@ -44,4 +44,18 @@ dependencies {
 
     // file picker
     implementation "com.github.onimur:handle-path-oz:$file_picker"
+
+//    //Paging 3
+//    def paging_version = "3.0.0"
+//    implementation "androidx.paging:paging-runtime:$paging_version"
+//    implementation "androidx.paging:paging-compose:1.0.0-alpha12"
+//
+////    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
+//
+//    implementation 'androidx.compose.material:material:1.0.3'
+//
+////    Coil
+//    implementation "io.coil-kt:coil-compose:1.4.0"
+
+
 }
