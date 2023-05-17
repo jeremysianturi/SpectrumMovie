@@ -83,9 +83,6 @@ class NetworkConnectionInterceptor @Inject constructor(@ApplicationContext conte
             // ... and so on
         }
 
-        println("request ${request.body}")
-        println("response ${response.code}")
-
 //        Timber.tag("networkInterception").d("token $token")
         return response
     }

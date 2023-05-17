@@ -52,7 +52,6 @@ class SliderAdapter @OptIn(ExperimentalCoroutinesApi::class) constructor(
 
         homeViewModel.search.observe(lifecycleOwner) { data ->
             for (i in 0 until genreArray.size-1) {
-                println("humbalahum: ${data[i].name}")
                 genreNames.add(data[i].name)
             }
             textViewGenre.text = genreNames.toString()

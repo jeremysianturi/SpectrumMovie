@@ -11,9 +11,4 @@ interface IGenreRepository {
 
     fun getSearchGenre(genreIds: List<Int>): Flow<List<Genre>>
 
-//    fun updateBusiness(businessUpdate: BusinessUpdate) : Flow<Resource<Submit>>
-//
-//    fun createCuriculum(curiculumCreate: BusinessCreate) : Flow<Resource<Submit>>
-
-//    fun getSearchBanner(searchby: String, search: String, sortBy: String): Flow<List<Business>>
 }

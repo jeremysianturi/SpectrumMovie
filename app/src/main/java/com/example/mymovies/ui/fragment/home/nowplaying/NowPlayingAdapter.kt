@@ -43,7 +43,6 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.UserViewHolder>
     override fun getItemCount(): Int = mData.size
 
     override fun onBindViewHolder(holder: NowPlayingAdapter.UserViewHolder, position: Int) {
-        println("checki position bro : $position")
         holder.bind(mData[position])
     }
 
@@ -61,12 +60,10 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.UserViewHolder>
 
                 val genre = data.genreIds
                 val genreArray = genre.filter { !it.isWhitespace() }.removeSurrounding("[", "]").split(",").map { it.toInt() }
-                println("humbalahum 1: $genreArray")
                 homeViewModel.genreQuery.value = genreArray
 
                 val genreNames = ArrayList<String>()
                 homeViewModel.search.observe(lifecycleOwner) { data ->
-                    println("check data observer: $data")
 //                    for (i in 0 until genreArray.size) {
 //                        println("humbalahum 2: ${data[i].name} dan size arraynya ${genreArray.size}")
 //                        genreNames.add(data[i].name)
@@ -74,8 +71,6 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.UserViewHolder>
 //                    textviewGenre.text = genreNames.toString()
                     textviewGenre.text = data.toString()
                 }
-                println("tadaaa: ${data.genreIds}")
-
 
             }
         }

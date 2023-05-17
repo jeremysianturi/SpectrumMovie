@@ -108,7 +108,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun setView(){
         binding.apply {
-            Log.d("checki","check check check : $dataDetailMovie")
             tvStatus.text = dataDetailMovie?.get(0)?.status
             ivPosterDetail.loadImage(this@DetailMovieActivity,"https://image.tmdb.org/t/p/original${dataDetailMovie?.get(0)?.posterPath}")
             tvTitle.text = dataDetailMovie?.get(0)?.title
